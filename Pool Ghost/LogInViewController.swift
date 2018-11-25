@@ -1,11 +1,9 @@
-//
-//  LogInViewController.swift
-//  Flash Chat
-//
 //  This is the view controller where users login
 
 
 import UIKit
+import Firebase
+import SVProgressHUD
 
 
 class LogInViewController: UIViewController {
@@ -25,10 +23,22 @@ class LogInViewController: UIViewController {
 
    
     @IBAction func logInPressed(_ sender: AnyObject) {
-
         
-        //TODO: Log in the user
+        //Login the user
         
+        SVProgressHUD.show()
+        
+        Auth.auth().signIn(withEmail: emailTextfield.text!, password: passwordTextfield.text!) {
+            (user, error) in
+            if error != nil {
+                print (error!)
+            }
+            else {
+                print("Login successful")
+                SVProgressHUD.dismiss()
+                self.performSegue(withIdentifier: "goToHome", sender: self)
+            }
+        }
         
     }
     
